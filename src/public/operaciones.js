@@ -1,0 +1,1 @@
+$('#alert-add-register').removeClass('hidden');
