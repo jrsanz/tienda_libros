@@ -39,13 +39,13 @@
                         <input class="form-control" type="text" name="num_paginas" value="<%= data.num_paginas %>" required>
                     </div>
                     <div class="col">
-                        <label class="form-label" for="idiomas">Idiomas</label>
-                        <select class="form-select" name="idiomas" required>
+                        <label class="form-label" for="idioma">Idiomas</label>
+                        <select class="form-select" name="idioma" required>
                             <option selected disabled value="">Selecciona un idioma</option>
                             <option value="Español">Español</option>
                             <option value="Inglés">Inglés</option>
-                            <option value="Frances">Frances</option>
-                            <option value="Aleman">Aleman</option>
+                            <option value="Frances">Francés</option>
+                            <option value="Alemán">Alemán</option>
                             <option value="Chino">Chino</option>
                         </select>
                     </div>
@@ -66,9 +66,13 @@
                     </div>
                 </div>
                 <br>
+                <label class="form-label" for="sinopsis">Sinopsis</label>
+                <textarea class="form-control" name="sinopsis" style="height: 100px" required><%= data.sinopsis %></textarea>
+                <br>
                 <input class="form-control btn btn-primary" type="submit" value="Actualizar datos">
             </form>
         </div>
     </div>
+</div>
 </body>
 </html>
