@@ -10,6 +10,15 @@ const app = express();
 const libros = require('./routes/libros');
 const usuarios = require('./routes/usuarios');
 const {urlencoded} = require("express");
+const multer = require("multer");
+
+//Configuración de imágenes
+const imgstorage = multer.diskStorage({
+    destination: path.join(__dirname, 'public/uploads'),  //Destino
+    filename: (req, file, cb) => {                        //Nombre de archivo
+        cb(null, file.originalname);
+    }
+});
 
 //Configuraciones
 app.set('port', process.env.PORT || 3000);  //El programa correrá sobre el púerto 3000
@@ -28,6 +37,20 @@ app.use(mysqlconn(mysql, {
 app.use(express.urlencoded({  //El servidor se encargará de entender todos los datos que vengan de un formulario si estos son datos básicos (no imágenes o archivos)
     extended: false
 }));
+
+app.use(multer({
+    storage: imgstorage,
+    dest: path.join(__dirname, 'public/uploads'),
+    limits: {fileSize: 5000000},
+    fileFilter: (req, file, cb) => {
+        const filetypes = /jpg|jpeg|png|gif/;  //Solo aceptará esos formatos
+        const mimetype = filetypes.test(file.mimetype);
+        const extname = filetypes.test(path.extname(file.originalname));
+        if (mimetype && extname) {
+            return cb(null, true);
+        }
+    }
+}).single('image'));
 
 //Rutas
 app.use('/', usuarios);

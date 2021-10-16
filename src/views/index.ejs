@@ -5,9 +5,389 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>BookLand</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css">
 </head>
 <body>
-    <h1>Hola</h1>
+    <!-- Inicio de la barra de navegación -->
+    <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+        <div class="container-fluid">
+            <!-- Inicio nombre de la marca -->
+            <a class="navbar-brand fs-4 mx-3" href="/"><i class="bi bi-book"></i> BookLand</a>
+            <!-- Inicio nombre de la marca -->
+
+            <!-- Inicio del menú de navegación -->
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#novedades">Novedades</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#caracteristicas">Características</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="categorias" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Categorías
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="categorias">
+                            <li><a class="dropdown-item" href="#">Novela</a></li>
+                            <li><a class="dropdown-item" href="#">Economia</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#sobre_nosotros">Sobre nosotros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Mi cuenta</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- Fin del menú de navegación -->
+
+            <!-- Inicio del campo de búsqueda -->
+            <form class="d-flex" action="/Search" method="post">
+                <input class="form-control" type="search" name="search_book" placeholder="Título, Autor, ISBN, Editorial" style="width: 250px">
+                <button class="btn btn-outline-secondary mx-3"><i class="bi bi-search" style="color: whitesmoke"></i></button>
+            </form>
+            <!-- Fin del campo de búsqueda -->
+
+            <!-- Inicio del icono responsivo -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Fin del icono responsivo -->
+        </div>
+    </nav>
+    <!-- Fin de la barra de navegación -->
+
+    <div class="container">
+        <!-- Inicio sección 1 -->
+        <h4 class="px-5 pt-5 pb-2 text-center">Eventos de Literatura</h4>
+
+        <!-- Inicio del carrusel de banners -->
+        <div id="carouselBanners" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselBanners" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselBanners" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselBanners" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <a href="https://www.fil.com.mx/" target="_blank"><img src="/img/FIL 2021.png" class="d-block w-100" alt="FIL 2021" style="height: 250px"></a>
+                </div>
+                <div class="carousel-item">
+                    <a href="https://es.unesco.org/commemorations/worldbookday" target="_blank"><img src="/img/Dia%20mundial%20del%20libro.jpg" class="d-block w-100" alt="Día Mundial Del Libro" style="height: 250px"></a>
+                </div>
+                <div class="carousel-item">
+                    <a href="https://sc.jalisco.gob.mx/" target="_blank"><img src="/img/Secretaria%20de%20cultura.jpg" class="d-block w-100" alt="Secretaría De Cultura Jalisco" style="height: 250px"></a>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselBanners" data-bs-slide="prev">
+                <i class="bi bi-chevron-left" style="color: black; font-size: 2rem"></i>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselBanners" data-bs-slide="next">
+                <i class="bi bi-chevron-right" style="color: black; font-size: 2rem"></i>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+        <!-- Fin del carrusel de banners -->
+        <!-- Fin sección 1 -->
+
+        <!-- Inicio sección 2 -->
+        <hr>
+        <h6 id="novedades" style="font-size: 18px">NOVEDADES</h6>
+        <hr>
+        <br>
+        <div class="row">
+            <div class="col-6 col-md-2">
+                <div class="card text-center">
+                    <img src="<%= data[0].imagen %>" class="card-img-top" alt="<%= data[0].nombre %>" style="height: 300px">
+                    <div class="card-body">
+                        <div style="height: 80px">
+                            <h5 class="card-title"><%= data[0].nombre %></h5>
+                        </div>
+                        <p class="card-text"><%= data[0].autor %></p>
+                        <p class="card-text"><strong>$<%= data[0].precio %></strong></p>
+                        <a href="#" class="btn btn-success">Comprar <i class="bi bi-cart"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-2">
+                <div class="card text-center">
+                    <img src="<%= data[1].imagen %>" class="card-img-top" alt="<%= data[1].nombre %>" style="height: 300px">
+                    <div class="card-body">
+                        <div style="height: 80px">
+                            <h5 class="card-title"><%= data[1].nombre %></h5>
+                        </div>
+                        <p class="card-text"><%= data[1].autor %></p>
+                        <p class="card-text"><strong>$<%= data[1].precio %></strong></p>
+                        <a href="#" class="btn btn-success">Comprar <i class="bi bi-cart"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-2">
+                <div class="card text-center">
+                    <img src="<%= data[2].imagen %>" class="card-img-top" alt="<%= data[2].nombre %>" style="height: 300px">
+                    <div class="card-body">
+                        <div style="height: 80px">
+                            <h5 class="card-title"><%= data[2].nombre %></h5>
+                        </div>
+                        <p class="card-text"><%= data[2].autor %></p>
+                        <p class="card-text"><strong>$<%= data[2].precio %></strong></p>
+                        <a href="#" class="btn btn-success">Comprar <i class="bi bi-cart"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-2">
+                <div class="card text-center">
+                    <img src="<%= data[3].imagen %>" class="card-img-top" alt="<%= data[3].nombre %>" style="height: 300px">
+                    <div class="card-body">
+                        <div style="height: 80px">
+                            <h5 class="card-title"><%= data[3].nombre %></h5>
+                        </div>
+                        <p class="card-text"><%= data[3].autor %></p>
+                        <p class="card-text"><strong>$<%= data[3].precio %></strong></p>
+                        <a href="#" class="btn btn-success">Comprar <i class="bi bi-cart"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-2">
+                <div class="card text-center">
+                    <img src="<%= data[4].imagen %>" class="card-img-top" alt="<%= data[4].nombre %>" style="height: 300px">
+                    <div class="card-body">
+                        <div style="height: 80px">
+                            <h5 class="card-title"><%= data[4].nombre %></h5>
+                        </div>
+                        <p class="card-text"><%= data[4].autor %></p>
+                        <p class="card-text"><strong>$<%= data[4].precio %></strong></p>
+                        <a href="#" class="btn btn-success">Comprar <i class="bi bi-cart"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-2">
+                <div class="card text-center">
+                    <img src="<%= data[5].imagen %>" class="card-img-top" alt="<%= data[5].nombre %>" style="height: 300px">
+                    <div class="card-body">
+                        <div style="height: 80px">
+                            <h5 class="card-title"><%= data[5].nombre %></h5>
+                        </div>
+                        <p class="card-text"><%= data[5].autor %></p>
+                        <p class="card-text"><strong>$<%= data[5].precio %></strong></p>
+                        <a href="#" class="btn btn-success">Comprar <i class="bi bi-cart"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Fin sección 2 -->
+
+        <br>
+
+        <!-- Inicio sección 3 -->
+        <hr>
+        <h6 style="font-size: 18px">LOS MÁS VENDIDOS</h6>
+        <hr>
+        <br>
+        <div class="row">
+            <div class="col-6 col-md-2">
+                <div class="card" style="width: 12rem">
+                    <img src="/uploads/El%20Código%20Da%20Vinci%20-%209786070744945.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">Last updated 3 mins ago</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-2">
+                <div class="card" style="width: 12rem">
+                    <img src="/uploads/Ángeles%20y%20Demonios%20-%209786070744969.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">Last updated 3 mins ago</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-2">
+                <div class="card" style="width: 12rem">
+                    <img src="/uploads/Cómo%20piensan%20los%20ricos%20-%209788408246121.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">Last updated 3 mins ago</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-2">
+                <div class="card" style="width: 12rem">
+                    <img src="/uploads/A%20fuego%20lento%20-%209786070778155.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">Last updated 3 mins ago</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-2">
+                <div class="card" style="width: 12rem">
+                    <img src="/uploads/El%20hombre%20más%20feliz%20del%20mundo%20-%209788408248736.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">Last updated 3 mins ago</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-2">
+                <div class="card" style="width: 12rem">
+                    <img src="/uploads/Una%20nueva%20felicidad%20-%209788408243113.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">Last updated 3 mins ago</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Fin sección 3 -->
+
+        <!-- Inicio sección 4 -->
+        <hr>
+        <h6 id="caracteristicas" style="font-size: 18px">CARACTERÍSTICAS</h6>
+        <hr>
+        <div class="row row-cols-1 row-cols-md-3 pt-3">
+            <div class="col">
+                <button type="button" class="btn btn-primary" disabled data-bs-toggle="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="40" fill="currentColor" class="bi bi-truck" viewBox="0 0 16 16">
+                        <path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5v-7zm1.294 7.456A1.999 1.999 0 0 1 4.732 11h5.536a2.01 2.01 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456zM12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                    </svg>
+                </button>
+                <h6 class="pt-3" style="font-size: 18px">Entregas rápidas</h6>
+                <p>
+                    Tenemos envíos a toda la república mexicana, recibelos entre 3 a 5 días y ten la oportunidad de rastrear tu pedido en todo momento.
+                </p>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-primary" disabled data-bs-toggle="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="40" fill="currentColor" class="bi bi-box" viewBox="0 0 16 16">
+                        <path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5 8 5.961 14.154 3.5 8.186 1.113zM15 4.239l-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923l6.5 2.6zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464L7.443.184z"/>
+                    </svg>
+                </button>
+                <h6 class="pt-3" style="font-size: 18px">Devoluciones</h6>
+                <p>
+                    Si tu pedido no te llegó en el tiempo estipulado o se te entregó en malas condiciones podemos cambiartelo o devolverte tu dinero.
+                </p>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-primary" disabled data-bs-toggle="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="40" fill="currentColor" class="bi bi-chat-left-text" viewBox="0 0 16 16">
+                        <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                        <path d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6zm0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
+                    </svg>
+                </button>
+                <h6 class="pt-3" style="font-size: 18px">Asistencia personalizada</h6>
+                <p>
+                    Contamos con redes sociales, números de teléfono y líbrería física donde podemos atenderte y resolver todas tus dudas.
+                </p>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-primary" disabled data-bs-toggle="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="40" fill="currentColor" class="bi bi-shop" viewBox="0 0 16 16">
+                        <path d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.371 2.371 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976l2.61-3.045zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0zM1.5 8.5A.5.5 0 0 1 2 9v6h1v-5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v5h6V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1V9a.5.5 0 0 1 .5-.5zM4 15h3v-5H4v5zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-3zm3 0h-2v3h2v-3z"/>
+                    </svg>
+                </button>
+                <h6 class="pt-3" style="font-size: 18px">Tienda Física</h6>
+                <p>
+                    Nos encontramos ubicados en Av. 16 de Septiembre 118, Zona Centro, 44100 Guadalajara, Jal. A una cuadra de la estación Plaza Universidad del tren ligero.
+                </p>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-primary" disabled data-bs-toggle="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="40" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                    </svg>
+                </button>
+                <h6 class="pt-3" style="font-size: 18px">Búsqueda rápida</h6>
+                <p>
+                    Ubica tus libros favoritos de manera más organizada por alguna de las siguientes opciones: nombre, autor, categoría, ISBN o editorial.
+                </p>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-primary" disabled data-bs-toggle="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="40" fill="currentColor" class="bi bi-emoji-smile" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                        <path d="M4.285 9.567a.5.5 0 0 1 .683.183A3.498 3.498 0 0 0 8 11.5a3.498 3.498 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.498 4.498 0 0 1 8 12.5a4.498 4.498 0 0 1-3.898-2.25.5.5 0 0 1 .183-.683zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5z"/>
+                    </svg>
+                </button>
+                <h6 class="pt-3" style="font-size: 18px">Excelente trato</h6>
+                <p>
+                    Nuestro personal está altamente capacitado para brindarte el mejor servicio en lo que necesites. Cualquier queja o sugerencia es bien recibida.
+                </p>
+            </div>
+        </div>
+        <hr>
+        <!-- Fin sección 4 -->
+
+        <!-- Inicio sección 5 -->
+        <img class="img-fluid pt-5" src="/img/Fomentar%20la%20lectura.jpg" style="width: 100%; height: 500px">
+        <p class="fst-italic text-center mb-5">"Nunca olvides fomentar la lectura entre tus semejantes." &nbsp;&nbsp;&nbsp;-BookLand</p>
+        <!-- Fin sección 5 -->
+
+
+        <hr>
+        <h6 id="sobre_nosotros" style="font-size: 18px">SOBRE NOSOTROS</h6>
+        <hr>
+    </div>
+
+    <!-- Inicio sección 7 -->
+    <footer class="bg-dark pb-2">
+        <div class="container">
+            <ul class="nav justify-content-center pt-2 pb-3 mb-3" style="border-bottom: 1px solid #797b7a">
+                <li class="nav-item">
+                    <a class="nav-link text-muted" href="/">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-muted" href="#novedades">Novedades</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-muted" href="#caracteristicas">Características</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-muted" href="#sobre_nosotros">Sobre nosotros</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-muted" href="#">Mi Cuenta</a>
+                </li>
+            </ul>
+        </div>
+        <p class="text-center text-muted">© 2021 BookLand</p>
+    </footer>
+    <!-- Fin sección 7 -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>

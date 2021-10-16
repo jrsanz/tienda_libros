@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Editar</title>
+    <title>Editar libro</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
@@ -11,20 +11,60 @@
     <div class="container pt-5 pb-5">
         <div class="row d-flex justify-content-center">
             <form class="col-12 col-lg-6 pt-3 pb-3 border rounded shadow" action="/libros/update/<%= data.id %>" method="post">
-                <label class="form-label" for="nombre">Nombre</label>
-                <input class="form-control" type="text" name="nombre" value="<%= data.nombre %>" required>
+                <div class="row">
+                    <div class="col">
+                        <label class="form-label" for="nombre">Nombre</label>
+                        <input class="form-control" type="text" name="nombre" value="<%= data.nombre %>" required>
+                    </div>
+                    <div class="col">
+                        <label class="form-label" for="autor">Autor</label>
+                        <input class="form-control" type="text" name="autor" value="<%= data.autor %>" required>
+                    </div>
+                </div>
                 <br>
-                <label class="form-label" for="isbn">ISBN</label>
-                <input class="form-control" type="text" name="isbn" value="<%= data.isbn %>" required>
+                <div class="row">
+                    <div class="col">
+                        <label class="form-label" for="isbn">ISBN</label>
+                        <input class="form-control" type="text" name="isbn" value="<%= data.isbn %>" required>
+                    </div>
+                    <div class="col">
+                        <label class="form-label" for="editorial">Editorial</label>
+                        <input class="form-control" type="text" name="editorial" value="<%= data.editorial %>" required>
+                    </div>
+                </div>
                 <br>
-                <label class="form-label" for="autor">Autor</label>
-                <input class="form-control" type="text" name="autor" value="<%= data.autor %>" required>
+                <div class="row">
+                    <div class="col">
+                        <label class="form-label" for="num_paginas">Número de páginas</label>
+                        <input class="form-control" type="text" name="num_paginas" value="<%= data.num_paginas %>" required>
+                    </div>
+                    <div class="col">
+                        <label class="form-label" for="idiomas">Idiomas</label>
+                        <select class="form-select" name="idiomas" required>
+                            <option selected disabled value="">Selecciona un idioma</option>
+                            <option value="Español">Español</option>
+                            <option value="Inglés">Inglés</option>
+                            <option value="Frances">Frances</option>
+                            <option value="Aleman">Aleman</option>
+                            <option value="Chino">Chino</option>
+                        </select>
+                    </div>
+                </div>
                 <br>
-                <label class="form-label" for="categoria">Categoría</label>
-                <input class="form-control" type="text" name="categoria" value="<%= data.categoria %>" required>
-                <br>
-                <label class="form-label" for="precio">Precio</label>
-                <input class="form-control" type="text" name="precio" value="<%= data.precio %>" required>
+                <div class="row">
+                    <div class="col">
+                        <label class="form-label" for="categoria">Categoría</label>
+                        <select class="form-select" name="categoria" required>
+                            <option selected disabled value="">Selecciona una categoría</option>
+                            <option value="Novela">Novela</option>
+                            <option value="Economía">Economía</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label class="form-label" for="precio">Precio</label>
+                        <input class="form-control" type="text" name="precio" value="<%= data.precio %>" required>
+                    </div>
+                </div>
                 <br>
                 <input class="form-control btn btn-primary" type="submit" value="Actualizar datos">
             </form>
