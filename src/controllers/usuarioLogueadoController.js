@@ -2,12 +2,19 @@ const controller = {};
 
 controller.index_ul = (req, res) => {
     const id = req.params.id;
+    var novedades = []
 
     req.getConnection((err, conn) => {
-        conn.query('SELECT * FROM libros ORDER BY id DESC LIMIT 6', (err, libros) => {
+        conn.query('SELECT * FROM libros ORDER BY id DESC LIMIT 6', (err, seccion1) => {
+            novedades = seccion1;
+        });
+    });
+    req.getConnection((err, conn) => {
+        conn.query('SELECT l.nombre, l.autor, l.isbn, l.precio, l.imagen, SUM(v.cantidad) AS libros_vendidos FROM ventas AS v JOIN libros AS l WHERE v.id_libro = l.id GROUP BY id_libro ORDER BY libros_vendidos DESC', (err, libros) => {
             res.render('./usuario_logueado/index_ulog', {
                 id_sesion: id,
-                data: libros
+                novedades: novedades,
+                mas_vendidos: libros
             });
         });
     });
@@ -23,12 +30,12 @@ controller.search_ul = (req, res) => {
     req.getConnection((err, conn) => {
         conn.query('SELECT * FROM libros WHERE nombre LIKE "%"?"%" OR autor LIKE "%"?"%" OR isbn LIKE "%"?"%" OR editorial LIKE "%"?"%"', [data.search_book, data.search_book, data.search_book, data.search_book], (err, libros) => {
             if (libros.length == 0 || buscar == ''){
-                res.render('libros_search', {
-                    d_sesion: id,
+                res.render('./usuario_logueado/libros_search_ulog', {
+                    id_sesion: id,
                     data: null
                 });
             } else {
-                res.render('libros_search', {
+                res.render('./usuario_logueado/libros_search_ulog', {
                     id_sesion: id,
                     data: libros
                 });
@@ -65,10 +72,12 @@ controller.details_ul = (req, res) => {
     });
 }
 
-var nuevas_existencias = [];
+var cantidad_actual = [];
 
-controller.buy_ul = (req, res) => {
+controller.buy_ul = async (req, res) => {
     const id_libro = req.body.libro;
+    const existencias = req.body.existencias;
+
     const id_usuario = req.params.id;
     const cantidad = req.body.cantidad;
     const tipo_envio = req.body.tipo_envio;
@@ -82,22 +91,26 @@ controller.buy_ul = (req, res) => {
         tipo_pago: tipo_pago
     }
 
-    req.getConnection((err, conn) => {
-        conn.query('INSERT INTO ventas SET ?', data, (err, x) => {
+    if ((existencias - cantidad) >= 0 ) {
+        req.getConnection((err, conn) => {
+            conn.query('INSERT INTO ventas SET ?', data, (err, x) => {
 
+            });
         });
-    });
-    req.getConnection((err, conn) => {
-        conn.query('SELECT * FROM libros WHERE id = ?', id_libro, (err, libro) => {
-            console.log(nuevas_existencias);
+        req.getConnection((err, conn) => {
+            conn.query('SELECT * FROM libros WHERE id = ?', id_libro, (err, libro) => {
+
+            });
         });
-    });
-    req.getConnection((err, conn) => {
-        conn.query('UPDATE libros SET existencias = ? WHERE id = ?', [id_libro, id_libro], (err, y) => {
-            console.log(nuevas_existencias);
-            res.redirect('/usuario/' + id_usuario);
+
+        req.getConnection((err, conn) => {
+            conn.query('UPDATE libros SET existencias = ? WHERE id = ?', [existencias - cantidad, id_libro], (err, y) => {
+                res.redirect('/usuario/' + id_usuario);
+            });
         });
-    });
+    } else {
+        res.send('Stock Agotado Para Este Libro');
+    }
 }
 
 controller.myaccount = (req, res) => {
@@ -120,7 +133,7 @@ controller.tracing = (req, res) => {
     req.getConnection((err, conn) => {
         conn.query('SELECT v.id, l.imagen, l.nombre, l.autor, l.isbn, l.editorial, l.precio, v.cantidad, v.tipo_envio, v.tipo_pago, v.estatus FROM ventas AS v JOIN libros AS l ON v.id_libro = l.id WHERE v.id = ?', [id_venta], (err, seguimiento) => {
             console.log(seguimiento);
-            res.render('./usuario_logueado/seguimiento', {
+            res.render('./usuario_logueado/seguimiento_ulog', {
                 id_sesion: id,
                 data: seguimiento
             });

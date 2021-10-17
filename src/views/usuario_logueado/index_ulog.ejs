@@ -46,84 +46,21 @@
         <hr>
         <br>
         <div class="row">
-            <div class="col-6 col-md-3 col-lg-2">
-                <div class="card text-center">
-                    <a href="/usuario/<%= id_sesion %>/details/<%= data[0].isbn %>"><img src="<%= data[0].imagen %>" class="card-img-top" alt="<%= data[0].nombre %>" style="height: 300px"></a>
-                    <div class="card-body">
-                        <div style="height: 90px">
-                            <h5 class="card-title"><a class="text-decoration-none" href="/usuario/<%= id_sesion %>/details/<%= data[0].isbn %>" style="color: black"><%= data[0].nombre %></a></h5>
+            <% for (var i = 0; i < 6; i++) { %>
+                <div class="col-6 col-md-3 col-lg-2">
+                    <div class="card text-center">
+                        <a href="/usuario/<%= id_sesion %>/details/<%= novedades[i].isbn %>"><img src="<%= novedades[i].imagen %>" class="card-img-top" alt="<%= novedades[i].nombre %>" style="height: 300px"></a>
+                        <div class="card-body">
+                            <div style="height: 90px">
+                                <h5 class="card-title"><a class="text-decoration-none" href="/usuario/<%= id_sesion %>/details/<%= novedades[i].isbn %>" style="color: black"><%= novedades[i].nombre %></a></h5>
+                            </div>
+                            <p class="card-text"><%= novedades[i].autor %></p>
+                            <p class="card-text"><strong>$<%= novedades[i].precio %></strong></p>
+                            <a href="/usuario/<%= id_sesion %>/details/<%= novedades[i].isbn %>" class="btn btn-success">Comprar <i class="bi bi-cart"></i></a>
                         </div>
-                        <p class="card-text"><%= data[0].autor %></p>
-                        <p class="card-text"><strong>$<%= data[0].precio %></strong></p>
-                        <a href="/usuario/<%= id_sesion %>/details/<%= data[0].isbn %>" class="btn btn-success">Comprar <i class="bi bi-cart"></i></a>
                     </div>
                 </div>
-            </div>
-            <div class="col-6 col-md-3 col-lg-2">
-                <div class="card text-center">
-                    <a href="/usuario/<%= id_sesion %>/details/<%= data[1].isbn %>"><img src="<%= data[1].imagen %>" class="card-img-top" alt="<%= data[1].nombre %>" style="height: 300px"></a>
-                    <div class="card-body">
-                        <div style="height: 90px">
-                            <h5 class="card-title"><a class="text-decoration-none" href="/usuario/<%= id_sesion %>/details/<%= data[1].isbn %>" style="color: black"><%= data[1].nombre %></a></h5>
-                        </div>
-                        <p class="card-text"><%= data[1].autor %></p>
-                        <p class="card-text"><strong>$<%= data[1].precio %></strong></p>
-                        <a href="/usuario/<%= id_sesion %>/details/<%= data[1].isbn %>" class="btn btn-success">Comprar <i class="bi bi-cart"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-md-3 col-lg-2">
-                <div class="card text-center">
-                    <a href="/usuario/<%= id_sesion %>/details/<%= data[2].isbn %>"><img src="<%= data[2].imagen %>" class="card-img-top" alt="<%= data[2].nombre %>" style="height: 300px"></a>
-                    <div class="card-body">
-                        <div style="height: 90px">
-                            <h5 class="card-title"><a class="text-decoration-none" href="/usuario/<%= id_sesion %>/details/<%= data[2].isbn %>" style="color: black"><%= data[2].nombre %></a></h5>
-                        </div>
-                        <p class="card-text"><%= data[2].autor %></p>
-                        <p class="card-text"><strong>$<%= data[2].precio %></strong></p>
-                        <a href="/usuario/<%= id_sesion %>/details/<%= data[2].isbn %>" class="btn btn-success">Comprar <i class="bi bi-cart"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-md-3 col-lg-2">
-                <div class="card text-center">
-                    <a href="/usuario/<%= id_sesion %>/details/<%= data[3].isbn %>"><img src="<%= data[3].imagen %>" class="card-img-top" alt="<%= data[3].nombre %>" style="height: 300px"></a>
-                    <div class="card-body">
-                        <div style="height: 90px">
-                            <h5 class="card-title"><a class="text-decoration-none" href="/usuario/<%= id_sesion %>/details/<%= data[3].isbn %>" style="color: black"><%= data[3].nombre %></a></h5>
-                        </div>
-                        <p class="card-text"><%= data[3].autor %></p>
-                        <p class="card-text"><strong>$<%= data[3].precio %></strong></p>
-                        <a href="/usuario/<%= id_sesion %>/details/<%= data[3].isbn %>" class="btn btn-success">Comprar <i class="bi bi-cart"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-md-3 col-lg-2">
-                <div class="card text-center">
-                    <a href="/usuario/<%= id_sesion %>/details/<%= data[4].isbn %>"><img src="<%= data[4].imagen %>" class="card-img-top" alt="<%= data[4].nombre %>" style="height: 300px"></a>
-                    <div class="card-body">
-                        <div style="height: 90px">
-                            <h5 class="card-title"><a class="text-decoration-none" href="/usuario/<%= id_sesion %>/details/<%= data[4].isbn %>" style="color: black"><%= data[4].nombre %></a></h5>
-                        </div>
-                        <p class="card-text"><%= data[4].autor %></p>
-                        <p class="card-text"><strong>$<%= data[4].precio %></strong></p>
-                        <a href="/usuario/<%= id_sesion %>/details/<%= data[4].isbn %>" class="btn btn-success">Comprar <i class="bi bi-cart"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-md-3 col-lg-2">
-                <div class="card text-center">
-                    <a href="/details/<%= data[5].isbn %>"><img src="<%= data[5].imagen %>" class="card-img-top" alt="<%= data[5].nombre %>" style="height: 300px"></a>
-                    <div class="card-body">
-                        <div style="height: 90px">
-                            <h5 class="card-title"><a class="text-decoration-none" href="/usuario/<%= id_sesion %>/details/<%= data[5].isbn %>" style="color: black"><%= data[5].nombre %></a></h5>
-                        </div>
-                        <p class="card-text"><%= data[5].autor %></p>
-                        <p class="card-text"><strong>$<%= data[5].precio %></strong></p>
-                        <a href="/usuario/<%= id_sesion %>/details/<%= data[5].isbn %>" class="btn btn-success">Comprar <i class="bi bi-cart"></i></a>
-                    </div>
-                </div>
-            </div>
+            <% } %>
         </div>
         <!-- Fin sección 2 -->
 
@@ -135,86 +72,29 @@
         <hr>
         <br>
         <div class="row">
-            <div class="col-6 col-lg-2">
-                <div class="card" style="width: 12rem">
-                    <img src="/uploads/El%20Código%20Da%20Vinci%20-%209786070744945.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+            <% if (mas_vendidos.length != 0) { %>
+                <% for (var i = 0; i < 6; i++) { %>
+                    <div class="col-6 col-md-3 col-lg-2">
+                        <div class="card text-center">
+                            <a href="/usuario/<%= id_sesion %>/details/<%= mas_vendidos[i].isbn %>"><img src="<%= mas_vendidos[i].imagen %>" class="card-img-top" alt="<%= mas_vendidos[i].nombre %>" style="height: 300px"></a>
+                            <div class="card-body">
+                                <div style="height: 90px">
+                                    <h5 class="card-title"><a class="text-decoration-none" href="/usuario/<%= id_sesion %>/details/<%= mas_vendidos[i].isbn %>" style="color: black"><%= mas_vendidos[i].nombre %></a></h5>
+                                </div>
+                                <p class="card-text"><%= mas_vendidos[i].autor %></p>
+                                <p class="card-text"><strong>$<%= mas_vendidos[i].precio %></strong></p>
+                                <a href="/usuario/<%= id_sesion %>/details/<%= mas_vendidos[i].isbn %>" class="btn btn-success">Comprar <i class="bi bi-cart"></i></a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-footer">
-                        <small class="text-muted">Last updated 3 mins ago</small>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-lg-2">
-                <div class="card" style="width: 12rem">
-                    <img src="/uploads/Ángeles%20y%20Demonios%20-%209786070744969.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">Last updated 3 mins ago</small>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-lg-2">
-                <div class="card" style="width: 12rem">
-                    <img src="/uploads/Cómo%20piensan%20los%20ricos%20-%209788408246121.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">Last updated 3 mins ago</small>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-lg-2">
-                <div class="card" style="width: 12rem">
-                    <img src="/uploads/A%20fuego%20lento%20-%209786070778155.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">Last updated 3 mins ago</small>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-lg-2">
-                <div class="card" style="width: 12rem">
-                    <img src="/uploads/El%20hombre%20más%20feliz%20del%20mundo%20-%209788408248736.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">Last updated 3 mins ago</small>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-lg-2">
-                <div class="card" style="width: 12rem">
-                    <img src="/uploads/Una%20nueva%20felicidad%20-%209788408243113.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-muted">Last updated 3 mins ago</small>
-                    </div>
-                </div>
-            </div>
+                <% } %>
+            <% } else { %>
+                    <h6>No hay ventas registradas por el momento.</h6>
+            <% } %>
         </div>
         <!-- Fin sección 3 -->
+
+        <br>
 
         <!-- Inicio sección 4 -->
         <hr>

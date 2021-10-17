@@ -9,7 +9,11 @@ router.get('/details/:isbn', controller.details);
 router.post('/comprar', controller.buy);
 router.get('/acceder', controller.myaccount);
 router.post('/add', controller.save);
-router.post('/Validacion', controller.validation);
-//router.get('/miCuenta/:id', controller.login);
+router.post('/validacion', controller.validation);
+router.get('/historial', controller.record);
+router.post('/historial/filterSearch', controller.filter_search);
+router.get('/historial/filterDesc', controller.filter_desc);
+router.get('/historial/seguimiento/:id', controller.tracing);
+router.post('/historial/seguimiento/:id', controller.update_tracing);
 
 module.exports = router;

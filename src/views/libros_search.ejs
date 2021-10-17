@@ -17,14 +17,14 @@
             <% for (var i = 0; i < data.length; i++) { %>
                     <div class="col-6 col-md-3 col-lg-2">
                         <div class="card text-center">
-                            <img src="<%= data[i].imagen %>" class="card-img-top" alt="<%= data[i].nombre %>" style="height: 300px">
+                            <a href="/details/<%= data[i].isbn %>"><img src="<%= data[i].imagen %>" class="card-img-top" alt="<%= data[i].nombre %>" style="height: 300px"></a>
                             <div class="card-body">
                                 <div style="height: 80px">
-                                    <h5 class="card-title"><%= data[i].nombre %></h5>
+                                    <h5 class="card-title"><a class="text-decoration-none" href="/details/<%= data[i].isbn %>" style="color: black"><%= data[i].nombre %></a></h5>
                                 </div>
                                 <p class="card-text"><%= data[i].autor %></p>
                                 <p class="card-text"><strong>$<%= data[i].precio %></strong></p>
-                                <a href="#" class="btn btn-success">Comprar <i class="bi bi-cart"></i></a>
+                                <a href="/details/<%= data[i].isbn %>" class="btn btn-success">Comprar <i class="bi bi-cart"></i></a>
                             </div>
                         </div>
                     </div>

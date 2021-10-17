@@ -2,11 +2,25 @@ const controller = {};
 const bcryptjs = require('bcryptjs');  //Contraseñas encriptadas
 
 controller.index = (req, res) => {
+    var novedades = []
+
     req.getConnection((err, conn) => {
-        conn.query('SELECT * FROM libros ORDER BY id DESC LIMIT 6', (err, libros) => {
-            res.render('index', {
-                data: libros
-            });
+        conn.query('SELECT * FROM libros ORDER BY id DESC LIMIT 6', (err, seccion1) => {
+            novedades = seccion1
+        });
+    });
+    req.getConnection((err, conn) => {
+        conn.query('SELECT l.nombre, l.autor, l.isbn, l.precio, l.imagen, SUM(v.cantidad) AS libros_vendidos FROM ventas AS v JOIN libros AS l WHERE v.id_libro = l.id GROUP BY id_libro ORDER BY libros_vendidos DESC', (err, libros) => {
+            /*if (libros.length == 0) {
+                res.render('index', {
+                    novedades: novedades
+                });
+            } else {*/
+                res.render('index', {
+                    novedades: novedades,
+                    mas_vendidos: libros
+                });
+            //}
         });
     });
 }
@@ -14,8 +28,6 @@ controller.index = (req, res) => {
 controller.search = (req, res) => {
     const data = req.body;
     const buscar = req.body.search_book;
-
-    console.log(data);
 
     req.getConnection((err, conn) => {
         conn.query('SELECT * FROM libros WHERE nombre LIKE "%"?"%" OR autor LIKE "%"?"%" OR isbn LIKE "%"?"%" OR editorial LIKE "%"?"%"', [data.search_book, data.search_book, data.search_book, data.search_book], (err, libros) => {
@@ -122,7 +134,6 @@ controller.save = async (req, res) => {
     });
 }
 
-
 controller.validation = async (req, res) => {
     const correo = req.body.correo;
     const password = req.body.password;
@@ -140,7 +151,7 @@ controller.validation = async (req, res) => {
                         alertIcon: 'error',
                         showConfirmButton: true,
                         timer: false,
-                        ruta: '/miCuenta'
+                        ruta: '/acceder'
                     });
                 } else {
                     res.render('acceder', {
@@ -163,9 +174,71 @@ controller.validation = async (req, res) => {
             alertIcon: 'warning',
             showConfirmButton: true,
             timer: false,
-            ruta: '/miCuenta'
+            ruta: '/acceder'
         });
     }
+}
+
+controller.record = (req, res) => {
+    req.getConnection((err, conn) => {
+       conn.query('SELECT v.id, u.nombre AS nombre_usuario, u.apellido_paterno, u.apellido_materno, l.nombre, l.autor, l.isbn, l.editorial, l.precio, v.cantidad, l.precio * v.cantidad AS total_a_pagar, v.tipo_envio, v.tipo_pago, v.estatus FROM libros AS l JOIN ventas AS v ON l.id = v.id_libro JOIN usuarios AS u ON v.id_usuario = u.id WHERE v.id_usuario', (err, historial) => {
+           res.render('historial_ventas', {
+             data: historial
+          });
+       });
+    });
+}
+
+controller.filter_search = (req, res) => {
+    const data = req.body;
+
+    //filtrar_search hace referencia al nombre del input
+    req.getConnection((err, conn) => {
+        conn.query('SELECT v.id, u.nombre, u.apellido_paterno, u.apellido_materno, l.nombre, l.autor, l.isbn, l.editorial, l.precio, v.cantidad, l.precio * v.cantidad AS total_a_pagar, v.tipo_envio, v.tipo_pago, v.estatus FROM libros AS l JOIN ventas AS v ON l.id = v.id_libro JOIN usuarios AS u ON v.id_usuario = u.id WHERE v.id_usuario = ?;', [data.filtrar_search], (err, libros) => {
+            res.render('historial_ventas', {
+                data: libros
+            });
+        });
+    });
+}
+
+controller.filter_desc = (req, res) => {
+    req.getConnection((err, conn) => {
+        conn.query('SELECT v.id, u.nombre AS nombre_usuario, u.apellido_paterno, u.apellido_materno, l.nombre, l.autor, l.isbn, l.editorial, l.precio, v.cantidad, l.precio * v.cantidad AS total_a_pagar, v.tipo_envio, v.tipo_pago, v.estatus FROM libros AS l JOIN ventas AS v ON l.id = v.id_libro JOIN usuarios AS u ON v.id_usuario = u.id ORDER BY cantidad DESC', (err, libros) => {
+            res.render('historial_ventas', {
+                data: libros
+            });
+        });
+    });
+};
+
+controller.tracing = (req, res) => {
+    const id = req.params.id;
+
+    req.getConnection((err, conn) => {
+        conn.query('SELECT v.id, l.imagen, l.nombre, l.autor, l.isbn, l.editorial, l.precio, v.cantidad, v.tipo_envio, v.tipo_pago, v.estatus FROM ventas AS v JOIN libros AS l ON v.id_libro = l.id WHERE v.id = ?', [id], (err, seguimiento) => {
+            res.render('seguimiento', {
+                data: seguimiento
+            });
+        });
+    });
+}
+
+controller.update_tracing = (req, res) => {
+    const data = req.body;
+    const id = req.params.id;
+    const estatus = req.body.estatus;
+
+    console.log(data);
+    console.log(id);
+    console.log(estatus);
+
+    req.getConnection((err, conn) => {
+        conn.query('UPDATE ventas SET estatus = ? WHERE id = ?', [estatus, id], (err, seguimiento) => {
+            console.log(seguimiento);
+            res.redirect('/historial');
+        });
+    });
 }
 
 function Categoria(req, res, isbn) {

@@ -1,0 +1,115 @@
+<%- include ('./partials/header_inicio') %>
+<title>Seguimiento de pedido</title>
+<%- include ('./partials/header_fin') %>
+
+<!-- Inicio navbar -->
+<%- include ('./partials/navbar') %>
+<!-- Fin navbar -->
+
+    <div class="container">
+        <div class="row">
+            <div class="col-1 col-md-2"></div>
+            <div class="col-10 col-md-8">
+                <h3 class="text-center pt-5">Seguimiento del pedido</h3>
+                <% if (data[0].estatus == 'Pago confirmado') { %>
+                    <div class="d-flex justify-content-center">
+                        <img class="img-fluid" src="/img/1%20Fase%20Terminada.png">
+                    </div>
+                <% } else if (data[0].estatus == 'Preparando tu pedido') { %>
+                    <div class="d-flex justify-content-center">
+                        <img class="img-fluid" src="/img/2%20Fases%20Terminadas.png">
+                    </div>
+                <% } else if (data[0].estatus == 'En camino') { %>
+                    <div class="d-flex justify-content-center">
+                        <img class="img-fluid" src="/img/3%20Fases%20Terminadas.png">
+                    </div>
+                <% } else if (data[0].estatus == 'Pedido entregado') { %>
+                    <div class="d-flex justify-content-center">
+                        <img class="img-fluid" src="/img/4%20Fases%20Terminadas.png">
+                    </div>
+                <% } %>
+                <h5>Detalles</h5>
+                <div class="row pt-3 pb-5">
+                    <div class="col-4">
+                        <img class="img-fluid" src="<%= data[0].imagen %>" alt="<%= data[0].nombre %>">
+                    </div>
+                    <div class="col-8">
+                        <form action="/historial/seguimiento/<%= data[0].id %>" method="post">
+                            <div class="row">
+                                <div class="col">
+                                    <label class="label-form" for="id">Número</label>
+                                    <input class="form-control" name="id" value="<%= data[0].id %>" disabled>
+                                </div>
+                                <div class="col">
+                                    <label class="label-form" for="nombre">Nombre</label>
+                                    <input class="form-control" name="nombre" value="<%= data[0].nombre %>" disabled>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col">
+                                    <label class="label-form" for="autor">Autor</label>
+                                    <input class="form-control" name="autor" value="<%= data[0].autor %>" disabled>
+                                </div>
+                                <div class="col">
+                                    <label class="label-form" for="isbn">ISBN</label>
+                                    <input class="form-control" name="isbn" value="<%= data[0].isbn %>" disabled>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col">
+                                    <label class="label-form" for="editorial">Editorial</label>
+                                    <input class="form-control" name="editorial" value="<%= data[0].editorial %>" disabled>
+                                </div>
+                                <div class="col">
+                                    <label class="label-form" for="precio">Precio</label>
+                                    <input class="form-control" name="precio" value="$<%= data[0].precio %>" disabled>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col">
+                                    <label class="label-form" for="cantidad">Cantidad</label>
+                                    <input class="form-control" name="cantidad" value="<%= data[0].cantidad %>" disabled>
+                                </div>
+                                <div class="col">
+                                    <label class="label-form" for="tipo_envio">Tipo de envío</label>
+                                    <input class="form-control" name="tipo_envio" value="<%= data[0].tipo_envio %>" disabled>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col">
+                                    <label class="label-form" for="tipo_pago">Tipo de pago</label>
+                                    <input class="form-control" name="tipo_pago" value="<%= data[0].tipo_pago %>" disabled>
+                                </div>
+                                <div class="col">
+                                    <label class="label-form" for="estatus">Estatus</label>
+                                    <select class="form-select" name="estatus">
+                                        <option value="Pago confirmado">Pago confirmado</option>
+                                        <option value="Preparando tu pedido">Preparando tu pedido</option>
+                                        <option value="En camino">En camino</option>
+                                        <option value="Pedido entregado">Pedido entregado</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="d-flex justify-content-center">
+                                <button type="submit" class="btn btn-primary">Actualizar pedido</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-1 col-md-2"></div>
+        </div>
+    </div>
+
+    <br>
+
+    <!-- Inicio footer -->
+    <%- include ('./partials/footer') %>
+    <!-- Fin footer -->
+</body>
+</html>

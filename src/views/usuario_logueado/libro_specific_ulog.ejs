@@ -23,12 +23,14 @@
             </div>
             <div class="col-3">
                 <div class="border shadow pt-4 pb-4">
-                    <h3 class="d-flex justify-content-center" style="display: inline">Precio: &nbsp;<p style="color: blue">$<%= libro_actual[0].num_paginas %></p></h3>
+                    <h3 class="d-flex justify-content-center" style="display: inline">Precio: &nbsp;<p style="color: blue">$<%= libro_actual[0].precio %></p></h3>
                     <br>
                     <div class="container-fluid">
                         <form action="/usuario/<%= id_sesion %>/comprar" method="post">
                             <label class="form-label" for="libro" hidden></label>
                             <input class="form-control" name="libro" value="<%= libro_actual[0].id %>" hidden>
+                            <label class="form-label" for="existencias" hidden></label>
+                            <input class="form-control" name="existencias" value="<%= libro_actual[0].existencias %>" hidden>
                             <label class="form-label" for="cantidad">Cantidad</label>
                             <input class="form-control" type="number" name="cantidad" min="1" value="1">
                             <br>
@@ -112,5 +114,19 @@
     <!-- Inicio footer -->
     <%- include ('../partials/footer_ulog') %>
     <!-- Fin footer -->
+
+    <% if (typeof alert != "undefined") { %>
+        <script>
+            Swal.fire({
+                title: '<%= alertTitle %>',
+                text: '<%= alertMessage %>',
+                icon: '<%= alertIcon %>',
+                showConfirmButton: <%= showConfirmButton %>,
+                timer: <%= timer %>
+            }).then(() => {
+                window.location = '<%= ruta %>'
+            })
+        </script>
+    <% } %>
 </body>
 </html>
