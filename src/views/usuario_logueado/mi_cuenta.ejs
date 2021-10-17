@@ -1,0 +1,62 @@
+<%- include ('../partials/header_inicio') %>
+<title>Mis Compras</title>
+<%- include ('../partials/header_fin') %>
+
+<!-- Inicio navbar -->
+<%- include ('../partials/navbar_ulog') %>
+<!-- Fin navbar -->
+
+    <div class="container pt-3 pb-3">
+        <!-- Inicio de la tabla -->
+        <div class="table-responsive pt-5">
+            <table class="table table-striped table-hover table-bordered align-middle caption-top">
+                <caption>Historial de compras</caption>
+
+                <thead class="text-center">
+                <tr>
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th>Autor</th>
+                    <th>ISBN</th>
+                    <th>Editorial</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Total pagado</th>
+                    <th>Tipo de envío</th>
+                    <th>Tipo de pago</th>
+                    <th>Estatus</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% if (data) { %>
+                    <% for (var i = 0; i < data.length; i++) { %>
+                        <tr>
+                            <td class="text-center"><%= i + 1 %></td>
+                            <td><%= data[i].nombre %></td>
+                            <td><%= data[i].autor %></td>
+                            <td><%= data[i].isbn %></td>
+                            <td><%= data[i].editorial %></td>
+                            <td class="text-center">$<%= data[i].precio %></td>
+                            <td class="text-center"><%= data[i].cantidad %></td>
+                            <td class="text-center">$<%= data[i].total_a_pagar %></td>
+                            <td class="text-center"><%= data[i].tipo_envio %></td>
+                            <td class="text-center"><%= data[i].tipo_pago %></td>
+                            <td class="text-center"><%= data[i].estatus %>
+                                <a href="/usuario/<%= id_sesion %>/miCuenta/seguimiento/<%= data[i].id %>"><button class="btn btn-primary mt-2">Detalles</button></a>
+                            </td>
+                        </tr>
+                    <% } %>
+                <% } %>
+                </tbody>
+            </table>
+        </div>
+        <!-- Fin de la tabla -->
+    </div>
+
+    <br>
+
+    <!-- Inicio footer -->
+    <%- include ('../partials/footer_ulog') %>
+    <!-- Fin footer -->
+</body>
+</html>

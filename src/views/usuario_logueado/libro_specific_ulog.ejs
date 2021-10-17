@@ -1,0 +1,116 @@
+<%- include ('../partials/header_inicio') %>
+<title><%= libro_actual[0].nombre + ' - ' + libro_actual[0].isbn %></title>
+<%- include ('../partials/header_fin') %>
+
+<!-- Inicio navbar -->
+<%- include ('../partials/navbar_ulog') %>
+<!-- Fin navbar -->
+
+    <!-- Inicio sección 1 -->
+    <div class="container">
+        <div class="row pt-5">
+            <div class="col-3">
+                <img class="img-fluid" src="<%= libro_actual[0].imagen %>" style="width: 300px; height: 400px">
+            </div>
+            <div class="col-6">
+                <h3><%= libro_actual[0].nombre %></h3>
+                <h5 class="fw-light"><%= libro_actual[0].autor %></h5>
+                <br><br>
+                <p class="fw-bold" style="display: inline">Editorial: </p>   <p style="display: inline"><%= libro_actual[0].editorial %></p>        <br><br>
+                <p class="fw-bold" style="display: inline">Categoría: </p>   <p style="display: inline"><%= libro_actual[0].categoria %></p>        <br><br>
+                <p class="fw-bold" style="display: inline">ISBN: </p>        <p style="display: inline"><%= libro_actual[0].isbn %></p>             <br><br>
+                <p class="fw-bold" style="display: inline">Páginas: </p>     <p style="display: inline"><%= libro_actual[0].num_paginas %></p>      <br><br>
+            </div>
+            <div class="col-3">
+                <div class="border shadow pt-4 pb-4">
+                    <h3 class="d-flex justify-content-center" style="display: inline">Precio: &nbsp;<p style="color: blue">$<%= libro_actual[0].num_paginas %></p></h3>
+                    <br>
+                    <div class="container-fluid">
+                        <form action="/usuario/<%= id_sesion %>/comprar" method="post">
+                            <label class="form-label" for="libro" hidden></label>
+                            <input class="form-control" name="libro" value="<%= libro_actual[0].id %>" hidden>
+                            <label class="form-label" for="cantidad">Cantidad</label>
+                            <input class="form-control" type="number" name="cantidad" min="1" value="1">
+                            <br>
+                            <label class="form-label" for="tipo_envio">Tipo de envío</label>
+                            <select class="form-select" name="tipo_envio">
+                                <option value="Normal" selected>Normal (3 a 5 días): $50</option>
+                                <option value="Express">Express (1 a 3 días): $100</option>
+                            </select>
+                            <br>
+                            <label class="form-label" for="tipo_pago">Tipo de pago</label>
+                            <select class="form-select" name="tipo_pago">
+                                <option value="Efectivo" selected>Efectivo</option>
+                                <option value="Tarjeta">Tarjeta de crédito</option>
+                                <option value="Cheque">Cheque</option>
+                            </select>
+                            <br>
+                            <button class="btn btn-primary" type="submit">Comprar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col">
+                <p><strong>Sinopsis:</strong></p>
+                <p style="text-align: justify"><%= libro_actual[0].sinopsis %></p>
+            </div>
+        </div>
+        <!-- Fin sección 1 -->
+
+        <!-- Inicio sección 2 -->
+        <hr>
+        <h6 style="font-size: 18px">TAMBIÉN TE PUEDE INTERESAR</h6>
+        <hr>
+        <div class="row">
+            <% for (var i = 0; i < (categoria_sug.length < 6 ? categoria_sug.length : 6); i++) { %>
+                <div class="col-6 col-md-3 col-lg-2">
+                    <div class="card text-center">
+                        <a href="/usuario/:id/details/<%= categoria_sug[i].isbn %>"><img src="<%= categoria_sug[i].imagen %>" class="card-img-top" alt="<%= categoria_sug[i].nombre %>" style="height: 300px"></a>
+                        <div class="card-body">
+                            <div style="height: 90px">
+                                <h5 class="card-title"><a class="text-decoration-none" href="/usuario/:id/details/<%= categoria_sug[0].isbn %>" style="color: black"><%= categoria_sug[i].nombre %></a></h5>
+                            </div>
+                            <p class="card-text"><%= categoria_sug[i].autor %></p>
+                            <p class="card-text"><strong>$<%= categoria_sug[i].precio %></strong></p>
+                            <a href="#" class="btn btn-success">Comprar <i class="bi bi-cart"></i></a>
+                        </div>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+        <!-- Fin sección 2 -->
+
+        <!-- Inicio sección 3 -->
+        <hr>
+        <h6 style="font-size: 18px">OTROS LIBROS DEL AUTOR</h6>
+        <hr>
+        <div class="row">
+            <% for (var i = 0; i < (autor_sug.length < 6 ? autor_sug.length : 6); i++) { %>
+                <div class="col-6 col-md-3 col-lg-2">
+                    <div class="card text-center">
+                        <a href="/usuario/:id/details/<%= autor_sug[i].isbn %>"><img src="<%= autor_sug[i].imagen %>" class="card-img-top" alt="<%= autor_sug[i].nombre %>" style="height: 300px"></a>
+                        <div class="card-body">
+                            <div style="height: 90px">
+                                <h5 class="card-title"><a class="text-decoration-none" href="/usuario/:id/details/<%= autor_sug[0].isbn %>" style="color: black"><%= autor_sug[i].nombre %></a></h5>
+                            </div>
+                            <p class="card-text"><%= autor_sug[i].autor %></p>
+                            <p class="card-text"><strong>$<%= autor_sug[i].precio %></strong></p>
+                            <a href="#" class="btn btn-success">Comprar <i class="bi bi-cart"></i></a>
+                        </div>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+        <!-- Fin sección 3 -->
+
+        <br>
+    </div>
+
+    <!-- Inicio footer -->
+    <%- include ('../partials/footer_ulog') %>
+    <!-- Fin footer -->
+</body>
+</html>

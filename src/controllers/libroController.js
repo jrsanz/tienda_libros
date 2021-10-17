@@ -24,16 +24,7 @@ controller.save = (req, res) => {
     const categoria = req.body.categoria;
     const precio = req.body.precio;
     const imagen = "/uploads/" + req.file.originalname;
-
-    console.log(nombre);
-    console.log(autor);
-    console.log(isbn);
-    console.log(editorial);
-    console.log(num_paginas);
-    console.log(idioma);
-    console.log(categoria);
-    console.log(precio);
-    console.log(imagen);
+    const sinopsis = req.body.sinopsis;
 
     var data = {
         nombre: nombre,
@@ -44,7 +35,8 @@ controller.save = (req, res) => {
         idioma: idioma,
         categoria: categoria,
         precio: precio,
-        imagen: imagen
+        imagen: imagen,
+        sinopsis: sinopsis
     }
 
     req.getConnection((err, conn) => {

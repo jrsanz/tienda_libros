@@ -1,0 +1,75 @@
+<%- include ('./partials/header_inicio') %>
+<title>Registrate</title>
+<%- include ('./partials/header_fin') %>
+
+<!-- Inicio navbar -->
+<%- include ('./partials/navbar') %>
+<!-- Fin navbar -->
+
+    <div class="container pt-3 pb-3">
+        <div class="row">
+            <div class="col-0 col-md-1"></div>
+            <!-- Inicio del formulario -->
+            <div class="col-12 col-md-4">
+                <h4 class="pb-2 text-center">Registro</h4>
+                <form class="pt-3 pb-3 px-4 border rounded shadow" action="/add" method="post">
+                    <label class="form-label" for="nombre">Nombre</label>
+                    <input class="form-control" type="text" name="nombre" required>
+                    <br>
+                    <label class="form-label" for="apellido_paterno">Apellido paterno</label>
+                    <input class="form-control" type="text" name="apellido_paterno" required>
+                    <br>
+                    <label class="form-label" for="apellido_materno">Apellido materno</label>
+                    <input class="form-control" type="text" name="apellido_materno" required>
+                    <br>
+                    <label class="form-label" for="correo">Correo</label>
+                    <input class="form-control" type="email" name="correo" required>
+                    <br>
+                    <label class="form-label" for="password">Contraseña</label>
+                    <input class="form-control" type="password" name="password" required>
+                    <br>
+                    <input class="form-control btn btn-primary" type="submit" value="Registrarme">
+                </form>
+                <!-- Fin del formulario -->
+            </div>
+            <div class="col-0 col-md-2"></div>
+            <div class="col-12 col-md-4">
+                <h4 class="pb-2 text-center">Iniciar sesión</h4>
+                <form class="pt-3 pb-3 px-4 border rounded shadow" action="/Validacion" method="post">
+                    <label class="form-label" for="correo">Correo</label>
+                    <input class="form-control" type="email" name="correo">
+                    <br>
+                    <label class="form-label" for="password">Contraseña</label>
+                    <input class="form-control" type="password" name="password">
+                    <br>
+                    <input class="form-control btn btn-primary" type="submit" value="Entrar">
+                </form>
+                <!-- Fin del formulario -->
+            </div>
+            <div class="col-0 col-md-1"></div>
+        </div>
+    </div>
+
+    <br>
+
+    <!-- Inicio footer -->
+    <%- include ('./partials/footer') %>
+    <!-- Fin footer -->
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.8/dist/sweetalert2.all.min.js"></script>
+
+    <% if (typeof alert != "undefined") { %>
+        <script>
+            Swal.fire({
+                title: '<%= alertTitle %>',
+                text: '<%= alertMessage %>',
+                icon: '<%= alertIcon %>',
+                showConfirmButton: <%= showConfirmButton %>,
+                timer: <%= timer %>
+            }).then(() => {
+                window.location = '<%= ruta %>'
+            })
+        </script>
+    <% } %>
+</body>
+</html>

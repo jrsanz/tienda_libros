@@ -9,6 +9,7 @@ const app = express();
 //Importar rutas
 const libros = require('./routes/libros');
 const usuarios = require('./routes/usuarios');
+const usuario_logueado = require('./routes/usuario_logueado');
 const {urlencoded} = require("express");
 const multer = require("multer");
 
@@ -26,7 +27,7 @@ app.set('view engine', 'ejs');  //ejs como motor de plantillas
 app.set('views', path.join(__dirname, 'views'));  //Se indica en que carpeta se encuenrtran las view para cuando se quiera hacer referencia a ellas
 
 //Middlewares
-app.use(mysqlconn(mysql, {
+app.use(mysqlconn(mysql, {  //MySQL
     host: 'localhost',
     user: 'root',
     password: 'root',
@@ -38,7 +39,7 @@ app.use(express.urlencoded({  //El servidor se encargará de entender todos los 
     extended: false
 }));
 
-app.use(multer({
+app.use(multer({  //Subir imágenes al servidor local
     storage: imgstorage,
     dest: path.join(__dirname, 'public/uploads'),
     limits: {fileSize: 5000000},
@@ -55,6 +56,7 @@ app.use(multer({
 //Rutas
 app.use('/', usuarios);
 app.use('/libros', libros);
+app.use('/usuario', usuario_logueado);
 
 //Archivos estáticos ()
 app.use(express.static(path.join(__dirname, 'public')));

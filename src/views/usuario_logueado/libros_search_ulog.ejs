@@ -1,0 +1,47 @@
+<%- include ('../partials/header_inicio') %>
+<title>Búsqueda de libros</title>
+<%- include ('../partials/header_fin') %>
+
+<!-- Inicio navbar -->
+<%- include ('../partials/navbar_ulog') %>
+<!-- Fin navbar -->
+
+    <div class="container">
+        <!-- Inicio sección 2 -->
+        <hr>
+        <h6 style="font-size: 18px">Resultados de la búsqueda</h6>
+        <hr>
+        <br>
+        <div class="row">
+            <% if (data) { %>
+                <% for (var i = 0; i < data.length; i++) { %>
+                    <div class="col-6 col-md-3 col-lg-2">
+                        <div class="card text-center">
+                            <img src="<%= data[i].imagen %>" class="card-img-top" alt="<%= data[i].nombre %>" style="height: 300px">
+                            <div class="card-body">
+                                <div style="height: 80px">
+                                    <h5 class="card-title"><%= data[i].nombre %></h5>
+                                </div>
+                                <p class="card-text"><%= data[i].autor %></p>
+                                <p class="card-text"><strong>$<%= data[i].precio %></strong></p>
+                                <a href="#" class="btn btn-success">Comprar <i class="bi bi-cart"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
+            <% } else { %>
+                <h6 style="font-size: 18px">Lo sentimos, no encontramos los resultados de tu búsqueda.</h6>
+                <p>Puedes intentarlo nuevamente por otro criterio de búsqueda, o si lo prefieres, puedes ponerte en contacto con nosotros.</p>
+                <img class="img-fluid" src="/img/Sin%20resultados.jpg" style="width: 100%; height: 500px">
+            <% } %>
+        </div>
+        <!-- Fin sección 1 -->
+    </div>
+
+    <br><br>
+
+    <!-- Inicio footer -->
+    <%- include ('../partials/footer_ulog') %>
+    <!-- Fin footer -->
+</body>
+</html>

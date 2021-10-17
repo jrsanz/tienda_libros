@@ -1,0 +1,44 @@
+<!-- Inicio de la barra de navegación -->
+<nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+    <div class="container-fluid">
+        <!-- Inicio nombre de la marca -->
+        <a class="navbar-brand fs-4 mx-3" href="/"><i class="bi bi-book"></i> BookLand</a>
+        <!-- Inicio nombre de la marca -->
+
+        <!-- Inicio del menú de navegación -->
+        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/usuario/<%= id_sesion %>">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#novedades">Novedades</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#caracteristicas">Características</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#sobre_nosotros">Sobre nosotros</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/usuario/<%= id_sesion %>/miCuenta">Mi cuenta</a>
+                </li>
+            </ul>
+        </div>
+        <!-- Fin del menú de navegación -->
+
+        <!-- Inicio del campo de búsqueda -->
+        <form class="d-flex" action="/usuario/<%= id_sesion %>/search" method="post">
+            <input class="form-control" type="search" name="search_book" placeholder="Título, Autor, ISBN, Editorial" style="width: 250px">
+            <button class="btn btn-outline-secondary mx-3"><i class="bi bi-search" style="color: whitesmoke"></i></button>
+        </form>
+        <!-- Fin del campo de búsqueda -->
+
+        <!-- Inicio del icono responsivo -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- Fin del icono responsivo -->
+    </div>
+</nav>
+<!-- Fin de la barra de navegación -->

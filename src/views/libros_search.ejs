@@ -2,7 +2,10 @@
     <title>Búsqueda de libros</title>
 <%- include ('./partials/header_fin') %>
 
+<!-- Inicio navbar -->
 <%- include ('./partials/navbar') %>
+<!-- Fin navbar -->
+
     <div class="container">
         <!-- Inicio sección 2 -->
         <hr>
@@ -10,7 +13,7 @@
         <hr>
         <br>
         <div class="row">
-        <% if (data) { %>
+        <% if (data != null) { %>
             <% for (var i = 0; i < data.length; i++) { %>
                     <div class="col-6 col-md-3 col-lg-2">
                         <div class="card text-center">
@@ -34,6 +37,7 @@
         </div>
         <!-- Fin sección 1 -->
     </div>
+
     <br><br>
 
     <!-- Inicio footer -->
