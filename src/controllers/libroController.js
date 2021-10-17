@@ -12,7 +12,7 @@ controller.list = (req, res) => {
             });
         });
     });
-};
+}
 
 controller.save = (req, res) => {
     const nombre = req.body.nombre;
@@ -44,7 +44,7 @@ controller.save = (req, res) => {
             res.redirect('/libros');  //Redirecciona al index
         });
     });
-};
+}
 
 controller.delete = (req, res) => {
     const id = req.params.id;  //req.params recupera lo que está en la url
@@ -54,7 +54,7 @@ controller.delete = (req, res) => {
           res.redirect('/libros');
        });
     });
-};
+}
 
 controller.edit = (req, res) => {
     const id = req.params.id;
@@ -66,7 +66,7 @@ controller.edit = (req, res) => {
             });
         });
     });
-};
+}
 
 controller.update = (req, res) => {
     const id = req.params.id;
@@ -77,7 +77,7 @@ controller.update = (req, res) => {
             res.redirect('/libros');
         });
     });
-};
+}
 
 controller.filter_asc = (req, res) => {
     const data = req.body;
@@ -105,7 +105,7 @@ controller.filter_asc = (req, res) => {
             });
         }
     });
-};
+}
 
 controller.filter_desc = (req, res) => {
     const data = req.body;
@@ -133,7 +133,7 @@ controller.filter_desc = (req, res) => {
             });
         }
     });
-};
+}
 
 controller.filter_search = (req, res) => {
     const data = req.body;
@@ -146,7 +146,80 @@ controller.filter_search = (req, res) => {
             });
         });
     });
-};
+}
+
+controller.list_providers = (req, res) => {
+    var lista_proveedores = [];
+    var lista_libros = [];
+
+    req.getConnection((err, conn) => {
+        conn.query('SELECT * FROM proveedores', (err, proveedores) => {
+            lista_proveedores = proveedores
+        });
+    });
+    req.getConnection((err, conn) => {
+        conn.query('SELECT * FROM libros', (err, libros) => {
+            lista_libros = libros
+        });
+    });
+    req.getConnection((err, conn) => {
+        conn.query('SELECT s.id, p.nombre, l.nombre AS nombre_libro, s.cantidad, s.pago FROM proveedores AS p JOIN surtir AS s ON p.id = s.id_proveedor JOIN libros AS l ON s.id_libro = l.id', (err, pago_proveedores) => {
+            res.render('proveedores', {
+                proveedores: lista_proveedores,
+                libros: lista_libros,
+                pago: pago_proveedores
+            })
+        });
+    });
+}
+
+controller.save_provider = (req, res) => {
+    const data = req.body;
+
+    req.getConnection((err, conn) => {
+        conn.query('INSERT INTO proveedores SET ?', data, (err, proveedor) => {
+            res.redirect('/libros/provider');
+        });
+    });
+}
+
+controller.save_provider_payment = (req, res) => {
+    const id_proveedor = req.body.proveedor;
+    const id_libro = req.body.libro;
+    const cantidad = req.body.cantidad;
+    const pago = req.body.pago;
+    const existencias = req.body.existencias;
+
+    //Obtener existencias actuales del libro
+    req.getConnection((err, conn) => {
+        conn.query('SELECT existencias FROM libros WHERE nombre = ?', id_libro, (err, existencias) => {
+            existencias_libro = existencias
+        });
+    });
+
+    var surtir = {
+        id_proveedor: id_proveedor,
+        id_libro: id_libro,
+        cantidad: cantidad,
+        pago: pago
+    }
+
+    var nuevas_existencias = parseInt(existencias) + parseInt(cantidad);
+
+    //Insertar datos en la relación surtir
+    req.getConnection((err, conn) => {
+        conn.query('INSERT INTO surtir SET ?', surtir, (err, resultado) => {
+
+        });
+    });
+
+    //Actualizar existencias de la tabla libros
+    req.getConnection((err, conn) => {
+        conn.query('UPDATE libros SET existencias = ? WHERE id = ?', [nuevas_existencias, id_libro], (err, y) => {
+            res.redirect('/libros/provider');
+        });
+    });
+}
 
 //Exportar el controlador
 module.exports = controller;

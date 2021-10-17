@@ -9,18 +9,13 @@ controller.index = (req, res) => {
             novedades = seccion1
         });
     });
+
     req.getConnection((err, conn) => {
         conn.query('SELECT l.nombre, l.autor, l.isbn, l.precio, l.imagen, SUM(v.cantidad) AS libros_vendidos FROM ventas AS v JOIN libros AS l WHERE v.id_libro = l.id GROUP BY id_libro ORDER BY libros_vendidos DESC', (err, libros) => {
-            /*if (libros.length == 0) {
-                res.render('index', {
-                    novedades: novedades
-                });
-            } else {*/
                 res.render('index', {
                     novedades: novedades,
                     mas_vendidos: libros
                 });
-            //}
         });
     });
 }
@@ -68,31 +63,15 @@ controller.details = (req, res) => {
 }
 
 controller.buy = (req, res) => {
-    const id_libro = req.body.libro;
-    const cantidad = req.body.cantidad;
-    const tipo_envio = req.body.tipo_envio;
-    const tipo_pago = req.body.tipo_pago;
-
-    console.log(id_libro);
-    console.log(cantidad);
-    console.log(tipo_envio);
-    console.log(tipo_pago);
-
-    res.redirect('/');
-
-    /*var data = {
-        id_libro: id_libro,
-        id_usuario: '',
-        cantidad: cantidad,
-        tipo_envio: tipo_envio,
-        tipo_pago: tipo_pago
-    }
-
-    req.getConnection((err, conn) => {
-        conn.query('INSERT INTO ventas SET ?', data, (err, conn) => {
-            res.redirect('/usuario/');
-        });
-    });*/
+    res.render('acceder', {
+        alert: true,
+        alertTitle: "Debes tener una cuenta para comprar en BokkLand",
+        alertMessage: "Crea una cuenta y disfruta de los beneficios.",
+        alertIcon: 'warning',
+        showConfirmButton: true,
+        timer: false,
+        ruta: '/acceder'
+    });
 }
 
 controller.myaccount = (req, res) => {
@@ -115,23 +94,35 @@ controller.save = async (req, res) => {
         password: passwordHash
     }
 
-    req.getConnection((err, conn) => {
-        conn.query('INSERT INTO usuarios SET ?', data, async (err, usuario) => {
-            if(err) {
-                console.log(err);
-            } else {
-                res.render('acceder', {
-                   alert: true,
-                   alertTitle: "Registro",
-                   alertMessage: "¡Registro Exitoso!",
-                   alertIcon: 'success',
-                   showConfirmButton: false,
-                   timer: 1500,
-                   ruta: '/'
-                });
-            }
+    if (nombre && apellido_paterno && apellido_materno && correo && password) {
+        req.getConnection((err, conn) => {
+            conn.query('INSERT INTO usuarios SET ?', data, async (err, usuario) => {
+                if(err) {
+                    console.log(err);
+                } else {
+                    res.render('acceder', {
+                        alert: true,
+                        alertTitle: "Registro",
+                        alertMessage: "¡Registro Exitoso!",
+                        alertIcon: 'success',
+                        showConfirmButton: false,
+                        timer: 1500,
+                        ruta: '/'
+                    });
+                }
+            });
         });
-    });
+    } else {
+        res.render('acceder', {
+            alert: true,
+            alertTitle: "Campos Vacíos",
+            alertMessage: "Debes de llenar todos los campos para tu registro.",
+            alertIcon: 'warning',
+            showConfirmButton: true,
+            timer: false,
+            ruta: '/acceder'
+        });
+    }
 }
 
 controller.validation = async (req, res) => {
@@ -181,7 +172,7 @@ controller.validation = async (req, res) => {
 
 controller.record = (req, res) => {
     req.getConnection((err, conn) => {
-       conn.query('SELECT v.id, u.nombre AS nombre_usuario, u.apellido_paterno, u.apellido_materno, l.nombre, l.autor, l.isbn, l.editorial, l.precio, v.cantidad, l.precio * v.cantidad AS total_a_pagar, v.tipo_envio, v.tipo_pago, v.estatus FROM libros AS l JOIN ventas AS v ON l.id = v.id_libro JOIN usuarios AS u ON v.id_usuario = u.id WHERE v.id_usuario', (err, historial) => {
+       conn.query('SELECT v.id, l.nombre, l.autor, l.isbn, l.editorial, l.precio, v.cantidad, v.total_se, v.total_ce, v.tipo_envio, v.tipo_pago, v.estatus FROM ventas AS v JOIN libros AS l ON v.id_libro = l.id WHERE v.id_usuario = ?', (err, historial) => {
            res.render('historial_ventas', {
              data: historial
           });

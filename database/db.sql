@@ -34,7 +34,24 @@ CREATE TABLE ventas (
     cantidad    INT           NOT NULL,
     tipo_envio  VARCHAR(10)   NOT NULL,
     tipo_pago   VARCHAR(20)   NOT NULL,
+    total_se    DECIMAL(6,2)  NOT NULL,
+    total_ce    DECIMAL(6,2)  NOT NULL,
     estatus     VARCHAR(25)   NOT NULL      DEFAULT('Pago confirmado')
+);
+
+CREATE TABLE proveedores (
+    id          SERIAL          PRIMARY KEY,
+    nombre      VARCHAR(30)     NOT NULL,
+    telefono    CHAR(10)        NOT NULL,
+    direccion   VARCHAR(255)    NOT NULL
+);
+
+CREATE TABLE surtir (
+    id              SERIAL          PRIMARY KEY,
+    id_proveedor    INT             NOT NULL,
+    id_libro        INT             NOT NULL,
+    cantidad        INT             NOT NULL,
+    pago            DECIMAL(6,2)    NOT NULL
 );
 
 
@@ -45,3 +62,14 @@ INSERT INTO libros VALUES(4, 'Una nueva felicidad', 'Curro Cañete', '9788408243
 INSERT INTO libros VALUES(5, 'A fuego lento', 'Paula Hawkins', '9786070778155', 'Planeta', 480, 'Español', 'Novela', 400.00, '/uploads/A%20fuego%20lento%20-%209786070778155.jpg', 'Con la misma intensidad con la que ha cautivado a 27 millones de lectores en todo el mundo la autora de La chica del tren, Paula Hawkins, nos ofrece un brillante thriller sobre las heridas que provocan los secretos que ocultamos. El descubrimiento del cuerpo de un joven asesinado brutalmente en una casa flotante de Londres desencadena sospechas sobre tres mujeres. Laura es la chica conflictiva que quedó con la víctima la noche en que murió; Carla, aún de luto por la muerte de un familiar, es la tía del joven; y Miriam es la indiscreta vecina que oculta información sobre el caso a la policía. Tres mujeres que no se conocen, pero que tienen distintas conexiones con la víctima. Tres mujeres que, por diferentes razones, viven con resentimiento y que, consciente o inconscientemente, esperan el momento de reparar el daño que se les ha hecho. Mira lo que has provocado.', 35);
 INSERT INTO libros VALUES(6, 'El fin del mundo tal y como lo conocemos', 'Marta García Aller', '9788408175384', 'Planeta', 336, 'Español', 'Economía', 420.00, '/uploads/El%20fin%20del%20mundo%20tal%20y%20como%20lo%20conocemos%20-%209788408175384.jpg', 'Igual que en el siglo XX desaparecieron imperios que parecían eternos, preceptos morales que habían durado mil años y dogmas científicos que resultaron falsos, en el XXI vamos a decir adiós a muchas de esas tecnologías, costumbres e ideas que nos rodean desde que nacimos. Y la misma suerte que corrieron los videoclubs, el fax y la URSS, la vivirán en breve muchas de las profesiones y los aparatos que nos rodean, como los volantes y el mando a distancia. ¿Cuánto de lo que vemos se desvanecerá? Se avecina el fin de los idiomas y de las cajas registradoras. Y a medida que vamos olvidando cómo era el mundo antes de Google, desaparece la noción de privacidad, la costumbre de conversar y hasta el reloj biológico. Sin olvidar el más ambicioso de todos los avances que la ciencia espera lograr este siglo: el fin del envejecimiento. En sintonía con los grandes reporteros y narradores de la actualidad, Marta García Aller nos sumerge en la transformación digital que vivimos y en los cambios culturales, tecnológicos y económicos que nos esperan en el siglo XXI. Lo hace charlando con expertos de prestigio mundial, pero también con ciudadanos de a pie, como el dependiente de la tienda que no teme la robotización; el alto directivo del motor que sueña con jubilarse antes de que los coches sean autónomos y el encargado de cuidar un viejo almacén de cabinas telefónicas. Un libro imprescindible para entender los cambios inevitables que van a transformar nuestras vidas en un futuro próximo.', 30);
 INSERT INTO libros VALUES(7, 'El Código Da Vinci', 'Dan Brown', '9786070744945', 'Planeta', 624, 'Español', 'Novela', 340.00, '/uploads/El%20Código%20Da%20Vinci%20-%209786070744945.jpg', 'Robert Langdon recibe una llamada en mitad de la noche: el conservador del museo del Louvre ha sido asesinado en extrañas circunstancias y junto a su cadáver ha aparecido un desconcertante mensaje cifrado. Al profundizar en la investigación, Langdon, experto en simbología, descubre que las pistas conducen a las obras de Leonardo Da Vinci? y que están a la vista de todos, ocultas por el ingenio del pintor. Langdon une esfuerzos con la criptóloga francesa Sophie Neveu y descubre que el conservador del museo pertenecía al priorato de Sión, una sociedad que a lo largo de los siglos ha contado con miembros tan destacados como sir Isaac Newton, Botticelli, Victor Hugo o el propio Da Vinci, y que ha velado por mantener en secreto una sorprendente verdad histórica. Una mezcla trepidante de aventuras, intrigas vaticanas, simbología y enigmas cifrados que provocó una extraordinaria polémica al poner en duda algunos de los dogmas sobre los que se asienta la Iglesia católica. Una de las novelas más leídas de todos los tiempos.', 25);
+
+INSERT INTO proveedores VALUES(1, 'Planeta', '5523698745', 'Av. México #1500');
+INSERT INTO proveedores VALUES(2, 'Debolsillo', '5596842137', 'Av. Javier Mina #2120');
+INSERT INTO proveedores VALUES(3, 'Lumen', '3356258741', 'Calle Miguel Hidalgo #515');
+INSERT INTO proveedores VALUES(4, 'Alianza', '3325630021', 'Av. San Miguel Allende #123');
+INSERT INTO proveedores VALUES(5, 'Porrúa', '5598632597', 'Calle Río Nilo #1890');
+INSERT INTO proveedores VALUES(6, 'Umbral', '3336589241', 'Calle Oblatos #1000');
+INSERT INTO proveedores VALUES(7, 'Panorama', '5566320149', 'Av. Niños Héroes #400');
+INSERT INTO proveedores VALUES(8, 'Diana', '5577487259', 'Calle Independencia #30');
+INSERT INTO proveedores VALUES(9, 'Patria', '3336432597', 'Calle Pablo Valdez #755');
+INSERT INTO proveedores VALUES(10, 'Santillana', '3336985201', 'Av. Enrique Díaz de León #635');

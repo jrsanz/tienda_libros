@@ -73,7 +73,7 @@
         <br>
         <div class="row">
             <% if (mas_vendidos.length != 0) { %>
-                <% for (var i = 0; i < 6; i++) { %>
+                <% for (var i = 0; i < (mas_vendidos.length >= 6 ? 6 : mas_vendidos.length); i++) { %>
                     <div class="col-6 col-md-3 col-lg-2">
                         <div class="card text-center">
                             <a href="/usuario/<%= id_sesion %>/details/<%= mas_vendidos[i].isbn %>"><img src="<%= mas_vendidos[i].imagen %>" class="card-img-top" alt="<%= mas_vendidos[i].nombre %>" style="height: 300px"></a>

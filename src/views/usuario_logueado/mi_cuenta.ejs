@@ -21,7 +21,8 @@
                     <th>Editorial</th>
                     <th>Precio</th>
                     <th>Cantidad</th>
-                    <th>Total pagado</th>
+                    <th>Total (Sin Envío)</th>
+                    <th>Total (Con Envío)</th>
                     <th>Tipo de envío</th>
                     <th>Tipo de pago</th>
                     <th>Estatus</th>
@@ -38,7 +39,8 @@
                             <td><%= data[i].editorial %></td>
                             <td class="text-center">$<%= data[i].precio %></td>
                             <td class="text-center"><%= data[i].cantidad %></td>
-                            <td class="text-center">$<%= data[i].total_a_pagar %></td>
+                            <td class="text-center">$<%= data[i].total_se %></td>
+                            <td class="text-center">$<%= data[i].total_ce %></td>
                             <td class="text-center"><%= data[i].tipo_envio %></td>
                             <td class="text-center"><%= data[i].tipo_pago %></td>
                             <td class="text-center"><%= data[i].estatus %>

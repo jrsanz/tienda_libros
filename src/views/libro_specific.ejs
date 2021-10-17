@@ -112,5 +112,19 @@
     <!-- Inicio footer -->
     <%- include ('./partials/footer') %>
     <!-- Fin footer -->
+
+    <% if (typeof alert != "undefined") { %>
+        <script>
+            Swal.fire({
+                title: '<%= alertTitle %>',
+                text: '<%= alertMessage %>',
+                icon: '<%= alertIcon %>',
+                showConfirmButton: <%= showConfirmButton %>,
+                timer: <%= timer %>
+            }).then(() => {
+                window.location = '<%= ruta %>'
+            })
+        </script>
+    <% } %>
 </body>
 </html>

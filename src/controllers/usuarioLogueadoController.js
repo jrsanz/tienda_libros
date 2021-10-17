@@ -76,40 +76,64 @@ var cantidad_actual = [];
 
 controller.buy_ul = async (req, res) => {
     const id_libro = req.body.libro;
-    const existencias = req.body.existencias;
-
     const id_usuario = req.params.id;
     const cantidad = req.body.cantidad;
     const tipo_envio = req.body.tipo_envio;
     const tipo_pago = req.body.tipo_pago;
+
+    const existencias = req.body.existencias;
+    const precio = req.body.precio;
+
+    var total_se = cantidad * precio;
+
+    var envio = (tipo_envio == 'Normal' ? 50 : 100);
+    var total_ce = total_se + envio;
 
     var data = {
         id_libro: id_libro,
         id_usuario: id_usuario,
         cantidad: cantidad,
         tipo_envio: tipo_envio,
-        tipo_pago: tipo_pago
+        tipo_pago: tipo_pago,
+        total_se: total_se,
+        total_ce: total_ce
     }
 
     if ((existencias - cantidad) >= 0 ) {
+        //Insertar datos en la relación ventas
         req.getConnection((err, conn) => {
             conn.query('INSERT INTO ventas SET ?', data, (err, x) => {
 
             });
         });
-        req.getConnection((err, conn) => {
-            conn.query('SELECT * FROM libros WHERE id = ?', id_libro, (err, libro) => {
 
-            });
-        });
-
+        //Actualizar existencias de la tabla libros
         req.getConnection((err, conn) => {
             conn.query('UPDATE libros SET existencias = ? WHERE id = ?', [existencias - cantidad, id_libro], (err, y) => {
-                res.redirect('/usuario/' + id_usuario);
+
             });
         });
+
+        //Inicio para redireccionar al index
+        var novedades = []
+
+        req.getConnection((err, conn) => {
+            conn.query('SELECT * FROM libros ORDER BY id DESC LIMIT 6', (err, seccion1) => {
+                novedades = seccion1;
+            });
+        });
+        req.getConnection((err, conn) => {
+            conn.query('SELECT l.nombre, l.autor, l.isbn, l.precio, l.imagen, SUM(v.cantidad) AS libros_vendidos FROM ventas AS v JOIN libros AS l WHERE v.id_libro = l.id GROUP BY id_libro ORDER BY libros_vendidos DESC', (err, libros) => {
+                res.render('./usuario_logueado/index_ulog', {
+                    id_sesion: id_usuario,
+                    novedades: novedades,
+                    mas_vendidos: libros
+                });
+            });
+        });
+        //Fin para redireccionar al index
     } else {
-        res.send('Stock Agotado Para Este Libro');
+        res.send('Stock Agotado Para Este Libro. Te sugerimos que intentes con una cantidad más pequeña o nos contactes para mayor información.');
     }
 }
 
@@ -117,7 +141,7 @@ controller.myaccount = (req, res) => {
     const id = req.params.id;
 
     req.getConnection((err, conn) => {
-        conn.query('SELECT v.id, l.nombre, l.autor, l.isbn, l.editorial, l.precio, v.cantidad, l.precio * v.cantidad AS total_a_pagar, v.tipo_envio, v.tipo_pago, v.estatus FROM ventas AS v JOIN libros AS l ON v.id_libro = l.id WHERE v.id_usuario = ?', id, (err, compras) => {
+        conn.query('SELECT u.nombre AS nombre_usuario, u.apellido_paterno, u.apellido_materno, l.nombre, l.autor, l.isbn, l.editorial, l.precio, v.cantidad, v.total_se, v.total_ce, v.tipo_envio, v.tipo_pago, v.estatus FROM libros AS l JOIN ventas AS v ON l.id = v.id_libro JOIN usuarios AS u ON v.id_usuario = u.id WHERE v.id_usuario = ?', id, (err, compras) => {
             res.render('./usuario_logueado/mi_cuenta', {
                 id_sesion: id,
                 data: compras
