@@ -19,9 +19,9 @@
             <!-- Inicio filtrar información -->
             <div class="row pt-4 pb-2">
                 <div class="col-8 table-responsive d-flex justify-content-bewteen">
-                    <form action="/libros/filterSearch" method="post">
-                        <label class="form-label pt-2 fs-5" for="filtrar_search">Buscar: </label>
-                        <input class="form-control mx-2 px-2 w-20" type="search" name="filtrar_search" placeholder="ID, Nombre" style="width: 300px; display: inline" required>
+                    <form action="/libros/provider/filterSearch" method="post">
+                        <label class="form-label pt-2 fs-5" for="filtrar_proveedores">Buscar: </label>
+                        <input class="form-control mx-2 px-2 w-20" type="search" name="filtrar_proveedores" placeholder="ID, Nombre" style="width: 300px; display: inline" required>
                         <button type="submit" class="btn btn-secondary"><i class="bi bi-search"></i></button>
                     </form>
                     <div class="col"></div>
@@ -87,9 +87,9 @@
         <!-- Inicio filtrar información -->
         <div class="row pt-3 pb-2">
             <div class="col-8 table-responsive d-flex justify-content-bewteen">
-                <form action="/libros/filterSearch" method="post">
+                <form action="/libros/provider/filterSearchPayment" method="post">
                     <label class="form-label pt-2 fs-5" for="filtrar_search">Buscar: </label>
-                    <input class="form-control mx-2 px-2 w-20" type="search" name="filtrar_search" placeholder="Título, Autor, ISBN, Editorial" style="width: 300px; display: inline" required>
+                    <input class="form-control mx-2 px-2 w-20" type="search" name="filtrar_search" placeholder="ID, Nombre del Proveedor" style="width: 300px; display: inline" required>
                     <button type="submit" class="btn btn-secondary"><i class="bi bi-search"></i></button>
                 </form>
                 <div class="col"></div>

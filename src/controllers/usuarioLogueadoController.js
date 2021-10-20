@@ -2,7 +2,7 @@ const controller = {};
 
 controller.index_ul = (req, res) => {
     const id = req.params.id;
-    var novedades = []
+    var novedades = [];
 
     req.getConnection((err, conn) => {
         conn.query('SELECT * FROM libros ORDER BY id DESC LIMIT 6', (err, seccion1) => {
@@ -141,7 +141,7 @@ controller.myaccount = (req, res) => {
     const id = req.params.id;
 
     req.getConnection((err, conn) => {
-        conn.query('SELECT u.nombre AS nombre_usuario, u.apellido_paterno, u.apellido_materno, l.nombre, l.autor, l.isbn, l.editorial, l.precio, v.cantidad, v.total_se, v.total_ce, v.tipo_envio, v.tipo_pago, v.estatus FROM libros AS l JOIN ventas AS v ON l.id = v.id_libro JOIN usuarios AS u ON v.id_usuario = u.id WHERE v.id_usuario = ?', id, (err, compras) => {
+        conn.query('SELECT v.id, u.nombre AS nombre_usuario, u.apellido_paterno, u.apellido_materno, l.nombre, l.autor, l.isbn, l.editorial, l.precio, v.cantidad, v.total_se, v.total_ce, v.tipo_envio, v.tipo_pago, v.estatus FROM libros AS l JOIN ventas AS v ON l.id = v.id_libro JOIN usuarios AS u ON v.id_usuario = u.id WHERE v.id_usuario = ?', id, (err, compras) => {
             res.render('./usuario_logueado/mi_cuenta', {
                 id_sesion: id,
                 data: compras

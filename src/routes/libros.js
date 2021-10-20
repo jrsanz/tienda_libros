@@ -14,6 +14,8 @@ router.post('/filterSearch', controller.filter_search);
 router.get('/provider', controller.list_providers);
 router.post('/provider/add', controller.save_provider);
 router.post('/provider/add_payment', controller.save_provider_payment);
+router.post('/provider/filterSearch', controller.search_providers);
+router.post('/provider/filterSearchPayment', controller.search_providers_payment);
 
 //Exportar las rutas
 module.exports = router;

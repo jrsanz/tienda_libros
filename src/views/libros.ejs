@@ -69,13 +69,20 @@
                     </div>
                     <div class="col">
                         <label class="form-label" for="precio">Precio</label>
-                        <input class="form-control" type="text" name="precio" min="100" required>
+                        <input class="form-control" type="number" name="precio" min="100" required>
                     </div>
                 </div>
                 <br>
-                <label class="form-label" for="image">Subir portada del libro (.jpg, .jpeg, .png, .pdf)</label>
-                <input class="form-control" type="file" name="image" required>
-                <br>
+                <div class="row">
+                    <div class="col">
+                        <label class="form-label" for="image">Subir portada del libro (.jpg, .jpeg, .png, .pdf)</label>
+                        <input class="form-control" type="file" name="image" required>
+                    </div>
+                    <div class="col">
+                        <label class="form-label" for="existencias">Existencias</label>
+                        <input class="form-control" type="number" name="existencias" min="1" required>
+                    </div>
+                </div>
                 <label class="form-label" for="sinopsis">Sinopsis</label>
                 <textarea class="form-control" name="sinopsis" style="height: 100px" required></textarea>
                 <br>

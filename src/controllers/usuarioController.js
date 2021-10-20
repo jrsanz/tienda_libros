@@ -40,8 +40,6 @@ controller.search = (req, res) => {
 }
 
 //Recuperar Datos Para Sugerir Libros
-var recuperar_categoria;
-var recuperar_autor;
 var categoria = [];
 var autor = [];
 
@@ -50,7 +48,6 @@ controller.details = (req, res) => {
 
     req.getConnection((err, conn) => {
         conn.query('SELECT * FROM libros WHERE isbn = ?', [isbn], (err, libro) => {
-            RecuperarDatos(libro);
             Categoria(req, res, isbn);
             Autor(req, res, isbn);
             res.render('libro_specific', {
@@ -65,7 +62,7 @@ controller.details = (req, res) => {
 controller.buy = (req, res) => {
     res.render('acceder', {
         alert: true,
-        alertTitle: "Debes tener una cuenta para comprar en BokkLand",
+        alertTitle: "Debes tener una cuenta para comprar en BookLand",
         alertMessage: "Crea una cuenta y disfruta de los beneficios.",
         alertIcon: 'warning',
         showConfirmButton: true,
@@ -172,7 +169,7 @@ controller.validation = async (req, res) => {
 
 controller.record = (req, res) => {
     req.getConnection((err, conn) => {
-       conn.query('SELECT v.id, l.nombre, l.autor, l.isbn, l.editorial, l.precio, v.cantidad, v.total_se, v.total_ce, v.tipo_envio, v.tipo_pago, v.estatus FROM ventas AS v JOIN libros AS l ON v.id_libro = l.id WHERE v.id_usuario = ?', (err, historial) => {
+       conn.query('SELECT v.id, u.nombre AS nombre_usuario, u.apellido_paterno, u.apellido_materno, l.nombre, l.autor, l.isbn, l.editorial, l.precio, v.cantidad, v.total_se, v.total_ce, v.tipo_envio, v.tipo_pago, v.estatus FROM libros AS l JOIN ventas AS v ON l.id = v.id_libro JOIN usuarios AS u ON v.id_usuario = u.id', (err, historial) => {
            res.render('historial_ventas', {
              data: historial
           });
@@ -185,7 +182,7 @@ controller.filter_search = (req, res) => {
 
     //filtrar_search hace referencia al nombre del input
     req.getConnection((err, conn) => {
-        conn.query('SELECT v.id, u.nombre, u.apellido_paterno, u.apellido_materno, l.nombre, l.autor, l.isbn, l.editorial, l.precio, v.cantidad, l.precio * v.cantidad AS total_a_pagar, v.tipo_envio, v.tipo_pago, v.estatus FROM libros AS l JOIN ventas AS v ON l.id = v.id_libro JOIN usuarios AS u ON v.id_usuario = u.id WHERE v.id_usuario = ?;', [data.filtrar_search], (err, libros) => {
+        conn.query('SELECT v.id, u.nombre AS nombre_usuario, u.apellido_paterno, u.apellido_materno, l.nombre, l.autor, l.isbn, l.editorial, l.precio, v.cantidad, v.total_se, v.total_ce, v.tipo_envio, v.tipo_pago, v.estatus FROM libros AS l JOIN ventas AS v ON l.id = v.id_libro JOIN usuarios AS u ON v.id_usuario = u.id WHERE v.id_usuario = ?', [data.filtrar_search], (err, libros) => {
             res.render('historial_ventas', {
                 data: libros
             });
@@ -246,11 +243,6 @@ function Autor(req, res, isbn) {
             SugerenciaAutor(libros_autor);
         });
     });
-}
-
-function RecuperarDatos(libro) {
-    recuperar_categoria = libro[0].categoria;
-    recuperar_autor = libro[0].autor;
 }
 
 function SugerenciaCategoria(libros_categoria) {

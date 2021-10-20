@@ -25,6 +25,7 @@ controller.save = (req, res) => {
     const precio = req.body.precio;
     const imagen = "/uploads/" + req.file.originalname;
     const sinopsis = req.body.sinopsis;
+    const existencias = req.body.existencias;
 
     var data = {
         nombre: nombre,
@@ -36,8 +37,11 @@ controller.save = (req, res) => {
         categoria: categoria,
         precio: precio,
         imagen: imagen,
-        sinopsis: sinopsis
+        sinopsis: sinopsis,
+        existencias: existencias
     }
+
+    console.log(data);
 
     req.getConnection((err, conn) => {
         conn.query('INSERT INTO libros SET ?', data, (err, libros) => {
@@ -217,6 +221,62 @@ controller.save_provider_payment = (req, res) => {
     req.getConnection((err, conn) => {
         conn.query('UPDATE libros SET existencias = ? WHERE id = ?', [nuevas_existencias, id_libro], (err, y) => {
             res.redirect('/libros/provider');
+        });
+    });
+}
+
+controller.search_providers = (req, res) => {
+    const search = req.body;
+    var lista_proveedores = [];
+    var lista_libros = [];
+
+    req.getConnection((err, conn) => {
+        conn.query('SELECT * FROM proveedores WHERE id LIKE "%"?"%" OR nombre LIKE "%"?"%"', [search, search], (err, proveedores) => {
+            lista_proveedores = proveedores
+        });
+    });
+    req.getConnection((err, conn) => {
+        conn.query('SELECT * FROM libros', (err, libros) => {
+            lista_libros = libros
+        });
+    });
+
+    //filtrar_search hace referencia al nombre del input
+    req.getConnection((err, conn) => {
+        conn.query('SELECT s.id, p.nombre, l.nombre AS nombre_libro, s.cantidad, s.pago FROM proveedores AS p JOIN surtir AS s ON p.id = s.id_proveedor JOIN libros AS l ON s.id_libro = l.id', (err, pago_proveedores) => {
+            res.render('proveedores', {
+                proveedores: lista_proveedores,
+                libros: lista_libros,
+                pago: pago_proveedores
+            });
+        });
+    });
+}
+
+controller.search_providers_payment = (req, res) => {
+    const search = req.body;
+    var lista_proveedores = [];
+    var lista_libros = [];
+
+    req.getConnection((err, conn) => {
+        conn.query('SELECT * FROM proveedores', (err, proveedores) => {
+            lista_proveedores = proveedores
+        });
+    });
+    req.getConnection((err, conn) => {
+        conn.query('SELECT * FROM libros', (err, libros) => {
+            lista_libros = libros
+        });
+    });
+
+    //filtrar_search hace referencia al nombre del input
+    req.getConnection((err, conn) => {
+        conn.query('SELECT s.id, p.nombre, l.nombre AS nombre_libro, s.cantidad, s.pago FROM proveedores AS p JOIN surtir AS s ON p.id = s.id_proveedor JOIN libros AS l ON s.id_libro = l.id WHERE s.id LIKE "%"?"%" OR p.nombre LIKE "%"?"%"', [search, search], (err, pago_proveedores) => {
+            res.render('proveedores', {
+                proveedores: lista_proveedores,
+                libros: lista_libros,
+                pago: pago_proveedores
+            });
         });
     });
 }
